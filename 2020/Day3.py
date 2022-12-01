@@ -1,6 +1,6 @@
 from math import prod
 
-with open('Day3.txt', 'r') as input_file:
+with open('2020/Day3.txt', 'r') as input_file:
     lines = input_file.readlines()
 
 trees = [0, 0, 0, 0, 0]

@@ -1,4 +1,4 @@
-with open('Day1.txt', 'r') as input_file:
+with open('2020/Day1.txt', 'r') as input_file:
     lines = input_file.readlines()
 numbers = [int(line) for line in lines]
 
