@@ -8,10 +8,10 @@ for cal in calories:
         elves.append(0)
     else:
         elves[-1] += int(cal)
-print(f'1. Answer is: {max(elves)}')
+print(f'1. Answer is: {max(elves)}') # 74394
 
 maxElves = [0,0,0]
 for i in range(3):
     maxElves[i] = max(elves)
     elves.remove(maxElves[i])
-print(f'2. Answer is: {sum(maxElves)}')
+print(f'2. Answer is: {sum(maxElves)}') # 212836

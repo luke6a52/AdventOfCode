@@ -37,3 +37,4 @@ for round in rounds:
 print(f'2. Opponent is  : {loss2}')  # 9379
 print(f'2. Answer is    : {score2}') # 15702
 print(f'2. Win-Draw-Loss: {stats2}') # [1655, 485, 360]
+# 12m 6s
