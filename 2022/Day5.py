@@ -1,7 +1,7 @@
 import re
 import copy
 
-with open('2022/Day5.txt', 'r') as input_file:
+with open('2022/Inputs/Day5.txt', 'r') as input_file:
     lines = input_file.readlines()
 blank = lines.index('\n')
 indices = lines[blank-1].rstrip()
@@ -28,8 +28,6 @@ print(f'1. After moving : {stacks1}')
 print(f'2. After moving : {stacks1}')
 
 answer1 = ''.join([stack[-1] for stack in stacks1])
-print(f'1. Answer is: {answer1}') # WCZTHTMPS
-# 51m
+print(f'1. Answer is: {answer1}') # WCZTHTMPS   51m
 answer2 = ''.join([stack[-1] for stack in stacks2])
-print(f'2. Answer is: {answer2}') # BLSGJSDTS
-# 1h 18m 12s
+print(f'2. Answer is: {answer2}') # BLSGJSDTS   1h 18m 12s

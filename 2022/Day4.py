@@ -1,6 +1,6 @@
 import re
 
-with open('2022/Day4.txt', 'r') as input_file:
+with open('2022/Inputs/Day4.txt', 'r') as input_file:
     lines = input_file.readlines()
 pairs = [line.rstrip() for line in lines]
 
@@ -12,7 +12,5 @@ for pair in pairs:
         count1 += 1
     if l2 >= r1 and l1 <= r2:
         count2 += 1
-print(f'1. Answer is: {count1}') # 605
-# 12m 30s
-print(f'2. Answer is: {count2}') # 914
-# 16m 7s
+print(f'1. Answer is: {count1}') # 605   12m 30s
+print(f'2. Answer is: {count2}') # 914   16m 7s

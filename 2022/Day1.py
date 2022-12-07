@@ -1,4 +1,4 @@
-with open('2022/Day1.txt', 'r') as input_file:
+with open('2022/Inputs/Day1.txt', 'r') as input_file:
     lines = input_file.readlines()
 calories = [line.rstrip() for line in lines]
 

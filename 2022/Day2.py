@@ -1,4 +1,4 @@
-with open('2022/Day2.txt', 'r') as input_file:
+with open('2022/Inputs/Day2.txt', 'r') as input_file:
     lines = input_file.readlines()
 rounds = [line.rstrip() for line in lines]
 
@@ -36,5 +36,4 @@ for round in rounds:
         case 'C Z': score2 += 7; loss2 += 3; stats2[0] += 1
 print(f'2. Opponent is  : {loss2}')  # 9379
 print(f'2. Answer is    : {score2}') # 15702
-print(f'2. Win-Draw-Loss: {stats2}') # [1655, 485, 360]
-# 12m 6s
+print(f'2. Win-Draw-Loss: {stats2}') # [1655, 485, 360]   12m 6s

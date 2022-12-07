@@ -1,4 +1,4 @@
-with open('2020/Day2.txt', 'r') as input_file:
+with open('2020/Inputs/Day2.txt', 'r') as input_file:
     lines = input_file.readlines()
 
 valid1 = 0
