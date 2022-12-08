@@ -4,15 +4,13 @@ import copy
 with open('2022/Inputs/Day5.txt', 'r') as input_file:
     lines = input_file.readlines()
 blank = lines.index('\n')
-indices = lines[blank-1].rstrip()
 
 stacks1 = []
-for j in range(len(indices)):
-    if re.match('[1-9]',indices[j]):
-        stacks1.append([])
-        for i in reversed(range(blank-1)):
-            if re.match('[A-Z]',lines[i][j]):
-                stacks1[int(indices[j])-1].append(lines[i][j])
+for j in range(1, len(lines[blank-2]), 4):
+    stacks1.append([])
+    for i in reversed(range(blank-1)):
+        if(lines[i][j] != ' '):
+            stacks1[-1].append(lines[i][j])
 print(f'0. Before moving: {stacks1}')
 stacks2 = copy.deepcopy(stacks1)
 
