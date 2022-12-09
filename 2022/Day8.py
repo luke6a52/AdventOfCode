@@ -4,7 +4,7 @@ with open('2022/Inputs/Day8.txt', 'r') as input_file:
     lines = input_file.readlines()
 rows = [line.rstrip() for line in lines]
 
-visible1 = 0;
+visible1 = 0
 for i in range(len(rows)):
     for j in range(len(rows[i])):
         current = rows[i][j]
@@ -22,7 +22,7 @@ for i in range(len(rows)):
             continue
 print(f'1. Answer is: {visible1}') # 1832   25m 1s
 
-visible2 = 0;
+visible2 = 0
 for i in range(1,len(rows)-1):
     for j in range(1,len(rows[i])-1):
         current = rows[i][j]
