@@ -32,6 +32,5 @@ for move in moves:
                 elif left_right > 0: rope[j][0] += 1
                 positions[j][str(rope[j])] = positions[j].get(str(rope[j]), 0) + 1
             
-print(positions[1])
 print(f'1. Answer is: {len(positions[1])}') # 6337   27m 34s
 print(f'2. Answer is: {len(positions[9])}') # 2455   1h 17m
