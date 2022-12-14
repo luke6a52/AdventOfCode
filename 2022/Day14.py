@@ -1,5 +1,9 @@
 with open('2022/Inputs/Day14.txt', 'r') as input_file:
     lines = [line.rstrip() for line in input_file]
+    
+rocks = {}
+sands = {}
+count = 0
 
 def show_formation():
     minx = 500
@@ -15,7 +19,21 @@ def show_formation():
             else: layer.append(' ')
         print(''.join(layer))
 
-rocks = {}
+def drop_sand(stop):
+    while True:
+        sand = [500, 0]
+        for y in range(bottom):
+            layer = rocks.get(y+1, set()).union(sands.get(y+1, set()))
+            if(  sand[0]   not in layer): sand[1] += 1;               continue
+            elif(sand[0]-1 not in layer): sand[1] += 1; sand[0] -= 1; continue
+            elif(sand[0]+1 not in layer): sand[1] += 1; sand[0] += 1; continue
+            else: 
+                sands[y] = sands.get(y, set()).union({sand[0]})
+                global count; count += 1
+                break
+        if(sand[1] == stop):
+            break
+
 for line in lines:
     ends = line.split(' -> ')
     for i in range(len(ends)-1):
@@ -28,41 +46,18 @@ for line in lines:
                 rocks[y] = rocks.get(y, set()).union({x1})
         else:
             assert(False), 'Implement Diagonals.'
-
-sands = {}
-count = 0
-bottom = max(rocks.keys())
+print('0. Formation is:')
 show_formation()
-while True:
-    sand = [500, 0]
-    for y in range(bottom):
-        layer = rocks.get(y+1, set()).union(sands.get(y+1, set()))
-        if(  sand[0]   not in layer): sand[1] += 1;               continue
-        elif(sand[0]-1 not in layer): sand[1] += 1; sand[0] -= 1; continue
-        elif(sand[0]+1 not in layer): sand[1] += 1; sand[0] += 1; continue
-        else: 
-            sands[y] = sands.get(y, set()).union({sand[0]})
-            count += 1
-            break
-    if(sand[1] == bottom):
-        break
+
+bottom = max(rocks.keys())
+drop_sand(bottom)
+print('1. Formation is:')
 show_formation()
 print(f'1. Answer is: {count}') # 858  1h 34m
 
 bottom = bottom + 2
 rocks[bottom] = {*range(500-bottom, 500+bottom+1)}
-while True:
-    sand = [500, 0]
-    for y in range(bottom):
-        layer = rocks.get(y+1, set()).union(sands.get(y+1, set()))
-        if(  sand[0]   not in layer): sand[1] += 1;               continue
-        elif(sand[0]-1 not in layer): sand[1] += 1; sand[0] -= 1; continue
-        elif(sand[0]+1 not in layer): sand[1] += 1; sand[0] += 1; continue
-        else: 
-            sands[y] = sands.get(y, set()).union({sand[0]})
-            count += 1
-            break
-    if(sand[1] == 0):
-        break
+drop_sand(0)
+print('2. Formation is:')
 show_formation()
-print(f'2. Answer is: {count}') # 858  1h 34m
+print(f'2. Answer is: {count}') # 26845  1h 44m
