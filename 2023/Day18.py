@@ -1,12 +1,9 @@
-import re
-import math
 import helpers
 
 with open('2023/Inputs/Day18.txt', 'r') as input_file:
     lines = [line.rstrip() for line in input_file]
 
 sum1 = 0
-sum2 = 0
 start = (200,150)
 size = (350,500)
 loop = [start]
@@ -42,20 +39,19 @@ for k, current in enumerate(newLoop):
         inside.add(adjacents['down-right'])
 starts = inside.copy()
 
-newLines = []
-for i in range(size[0]):
-    newLine = ''
-    for j in range(size[1]):
-        if (i,j) in boundary:
-            newLine += '#' if boundary[(i,j)] else '.'
-        else:
-            newLine += ' '
-    newLine += '\n'
-    newLines.append(newLine)
-with open('2023/Inputs/temp.txt', 'w') as output_file:
-    output_file.writelines(newLines)
+# newLines = []
+# for i in range(size[0]):
+#     newLine = ''
+#     for j in range(size[1]):
+#         if (i,j) in boundary:
+#             newLine += '#' if boundary[(i,j)] else '.'
+#         else:
+#             newLine += ' '
+#     newLine += '\n'
+#     newLines.append(newLine)
+# with open('2023/Inputs/temp.txt', 'w') as output_file:
+#     output_file.writelines(newLines)
 
-print(newLoop)
 while len(starts) > 0:
     point = starts.pop()
     adjacents = set(helpers.getAdjacentPoints(point, size).values())
@@ -68,27 +64,84 @@ while len(starts) > 0:
             for adj in helpers.getAdjacentPoints(next,size).values():
                 adjacents.add(adj)
 print(f'1. Answer is: {len(inside)+len(boundary)}') # 62365
-print(f'2. Answer is: {sum2}') #
 
-# rows = {}
-# cols = {}
-# for point in edge[1:]:
-#     if point[0] in rows:
-#         rows[point[0]].append(point[1])
-#     else:
-#         rows[point[0]] = [point[1]]
-#     if point[1] in cols:
-#         cols[point[1]].append(point[0])
-#     else:
-#         cols[point[1]] = [point[0]]
-# for i, row in rows.items():
-#     if i == min(rows.keys()) or i == max(rows.keys()):
-#         sum1 += len(row)
-#         continue
-#     row.sort()
-#     inside = False
-#     for j in range(row[0], row[-1]+1):
-#         if j in row and j-1 not in row:
-#             inside = not inside
-#         if inside or j in row:
-#             sum1 += 1
+# Should probably do part 1 like this as well
+sum2 = 0
+horizontals = {}
+verticals = {}
+current = (0,0)
+for i, line in enumerate(lines):
+    dir, dist, color = line.split()
+    dist = int(color[2:7], 16)
+    dir = int(color[7])
+    if dir == 0:
+        horizontals[current[0]] = horizontals.get(current[0], []) + [(current[1], current[1]+dist)]
+        current = (current[0], current[1]+dist)
+    elif dir == 1:
+        verticals[current[1]] = verticals.get(current[1], []) + [(current[0], current[0]+dist)]
+        current = (current[0]+dist, current[1])
+    elif dir == 2:
+        horizontals[current[0]] = horizontals.get(current[0], []) + [(current[1]-dist, current[1])]
+        current = (current[0], current[1]-dist)
+    elif dir == 3:
+        verticals[current[1]] = verticals.get(current[1], []) + [(current[0]-dist, current[0])]
+        current = (current[0]-dist, current[1])
+    else:
+        print(f'ERROR: {line}')
+horKeys = list(horizontals.keys())
+horKeys.sort()
+verKeys = list(verticals.keys())
+verKeys.sort()
+for i, horKey in enumerate(horKeys):
+    # sum first row
+    if i == 0:
+        sum2 += sum([seg[1] - seg[0] + 1 for seg in horizontals[horKey]])
+        continue
+    # sum all rows since the last horizontal segment(s)
+    height = horKey-1 - horKeys[i-1]
+    walls = []
+    for j, verKey in enumerate(verKeys):
+        for seg in verticals[verKey]:
+            if seg[0] <= horKey-1 <= seg[1]:
+                walls.append(verKey)
+                break
+    sum2 += height * sum([walls[j+1] - walls[j] + 1 for j in range(0, len(walls), 2)])
+    # sum this row
+    walls = []
+    lastCorner = ''
+    for j, verKey in enumerate(verKeys):
+        for seg in verticals[verKey]:
+            if seg[0] < horKey < seg[1]:
+                walls.append(verKey)
+                break
+            elif seg[0] == horKey:
+                if lastCorner == 'bottom':
+                    if len(walls) % 2 == 0:
+                        walls[-1] = verKey
+                    lastCorner = ''
+                elif lastCorner == 'top':
+                    if len(walls) % 2 == 0:
+                        walls[-1] = verKey-1
+                    lastCorner = ''
+                    walls.append(verKey)
+                else:
+                    lastCorner = 'top'
+                    walls.append(verKey)
+                break
+            elif horKey == seg[1]:
+                if lastCorner == 'top':
+                    if len(walls) % 2 == 0:
+                        walls[-1] = verKey
+                    lastCorner = ''
+                elif lastCorner == 'bottom':
+                    if len(walls) % 2 == 0:
+                        walls[-1] = verKey-1
+                    lastCorner = ''
+                    walls.append(verKey)
+                else:
+                    lastCorner = 'bottom'
+                    walls.append(verKey)
+                break
+    print(horKey, walls)
+    sum2 += sum([walls[j+1] - walls[j] + 1 for j in range(0, len(walls), 2)])
+print(f'2. Answer is: {sum2}') # 159485361249806
