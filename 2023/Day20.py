@@ -23,16 +23,13 @@ highList = []
 state = tuple([(name, tuple(node[0].items()) if isinstance(node[0], dict) else node[0]) for name, node in nodes.items()])
 iters = 1000
 sum2 = 0
-while state not in states and len(states) < iters: #and sum2 == 0: 
+while state not in states and len(states) < iters: 
     pulses = [(False, 'broadcaster', out) for out in nodes['broadcaster'][1]] # Broadcaster
     lows = 1 + len(pulses) # Falses
     highs = 0 # Trues
     while len(pulses) > 0:
         pulse = pulses.pop(0)
         if pulse[2] not in nodes:
-            if not pulse[0]:
-                sum2 = len(states) + 1
-                break
             continue
         node = nodes[pulse[2]]
         if isinstance(node[0], bool): # Flip Flop
