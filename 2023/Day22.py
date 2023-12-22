@@ -33,23 +33,48 @@ for b, brick in enumerate(bricks):
 # for i in range(10):
 #     print([ground[(i, j)] for j in range(10)])
 safes = [True] * len(bricks)
-def checkSupports(brick):
-    support = None
+supports = [set() for b in range(len(bricks))]
+supportedBy = [set() for b in range(len(bricks))]
+def checkSupports(b, brick): ######################################TODO brick 7 is not being marked unsafe
     for i in range(brick[0][2], brick[1][2]+1):
         for j in range(brick[0][1], brick[1][1]+1):
             k = brick[0][0]
-            if k-1 in ground[(i, j)]:
-                if support is None:
-                    support = ground[(i, j)][k-1]
-                else:
-                    return
-    if support is not None:
-        safes[support] = False
+            if k != 1 and k-1 in ground[(i, j)]:
+                supportedBy[b].add(ground[(i, j)][k-1])
+                supports[ground[(i, j)][k-1]].add(b)
+    if len(supportedBy[b]) == 1:
+        safes[list(supportedBy[b])[0]] = False
 for b, brick in enumerate(bricks):
-    checkSupports(brick)
+    checkSupports(b, brick)
 for b, safe in enumerate(safes):
     #print(safe, bricks[b])
     if safe:
         sum1 += 1
-print(f'1. Answer is: {sum1}') # 598 is too high
-print(f'2. Answer is: {sum2}') #
+def printTower():
+    for k in range(160,0,-1):
+        print(f'{k}------------------------------------------------')
+        for i in range(10):
+            temp = ''
+            for j in range(10):
+                if k in ground[(i, j)]:
+                    color = '\033[92m' if safes[ground[(i, j)][k]] else '\033[91m'
+                    temp += f'{color}{ground[(i, j)][k]:0>4}\033[0m '
+                else:
+                    temp += '     '
+            print(temp)
+    print(f'{0}------------------------------------------------')
+#printTower()
+falls = []
+for b, support in enumerate(supports):
+    #print(support)
+    nexts = support.copy()
+    gone = {b}
+    while len(nexts) > 0:
+        next = nexts.pop()
+        if all([under in gone for under in supportedBy[next]]):
+            gone.add(next)
+            for over in supports[next]:
+                nexts.add(over)
+    falls.append(len(gone)-1)
+print(f'1. Answer is: {sum1}') # 405
+print(f'2. Answer is: {sum(falls)}') # 61297
