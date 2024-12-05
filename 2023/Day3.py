@@ -28,3 +28,8 @@ for part in parts:
         sum1 += int(part[0])
 print(f'1. Answer is: {sum1}') # 521601
 print(f'2. Answer is: {sum2}') # 80694070
+
+# Alternate
+from .. import helpers
+points = helpers.listsToPoints(lines)
+print(points[-1])
