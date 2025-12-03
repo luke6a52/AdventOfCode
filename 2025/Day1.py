@@ -7,11 +7,11 @@ dial = 50
 sum1 = 0
 sum2 = 0
 for line in lines:
-    num = [int(num) for num in re.findall('\d+', line)][0]
+    num = [int(num) for num in re.findall('\d+', line)][0] # type: ignore
     if line.startswith('L'):
         num = -num
     dial += num
-    print(dial)
+    # print(dial)
     if dial%100 == 0:
         sum1 += 1
     if dial >= 100:
