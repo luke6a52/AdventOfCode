@@ -30,6 +30,17 @@ def getRays(start, length=1):
         rays['upright'  ].append((i-n,j+n))
     return rays
 
+def printPoints(points):
+    i = 0
+    line = ''
+    for point, value in points.items():
+        if (point[0] > i):
+            print(line)
+            i += 1
+            line = ''
+        line += value
+    print(line)
+
 # other functions
 # Binary Search
 # Min distance
