@@ -6,7 +6,7 @@ with open('2025/Inputs/Day3.txt', 'r') as input_file:
 sum1 = 0
 sum2 = 0
 for line in lines:
-    nums = [int(num) for num in re.findall('\d', line)] # type: ignore
+    nums = [int(num) for num in re.findall('\\d', line)]
 
     best1 = [0,1]
     best2 = [0,1,2,3,4,5,6,7,8,9,10,11]

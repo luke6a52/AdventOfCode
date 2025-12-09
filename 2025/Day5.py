@@ -8,10 +8,10 @@ ids = False
 sum1 = 0
 empty = lines.index('')
 for line in lines[:empty]:
-    nums = [int(num) for num in re.findall('\d+', line)] # type: ignore
+    nums = [int(num) for num in re.findall('\\d+', line)]
     ranges1.append([nums[0], nums[1]])
 for line in lines[empty+1:]:
-    num = [int(num) for num in re.findall('\d+', line)][0] # type: ignore
+    num = [int(num) for num in re.findall('\\d+', line)][0]
     for ran in ranges1:
          if ran[0] <= num <= ran[1]:
             sum1 += 1
@@ -20,7 +20,7 @@ print(f'1. Answer is: {sum1}') # 848
 
 sum2 = 0
 ranges2 = []
-ranges1.sort(key=lambda ran1: ran1[0])
+ranges1.sort()
 for ran1 in ranges1:
     intersects = False
     for i, ran2 in enumerate(ranges2):

@@ -7,7 +7,7 @@ sum1 = 0
 sum2 = []
 for span in line.split(','):
     # print(span)
-    numstrs = re.findall('\d+', span) # type: ignore
+    numstrs = re.findall('\\d+', span)
     len0 = len(numstrs[0])
     len1 = len(numstrs[1])
     num0 = int(numstrs[0])

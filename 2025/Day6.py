@@ -4,7 +4,7 @@ import math
 with open('2025/Inputs/Day6.txt', 'r') as input_file:
     lines = [line for line in input_file]
 
-problems = [[op] for op in re.findall('[*+]\s+', lines[-1])] # type: ignore
+problems = [[op] for op in re.findall('[*+]\\s+', lines[-1])]
 for line in lines[0:-1]:
     j = 0
     for problem in problems:
